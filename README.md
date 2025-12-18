@@ -207,5 +207,19 @@ This project focuses on **code quality, structure, and architectural clarity**, 
 
 ---
 
+## ✅ Screenshots
+<img width="200" alt="Screenshot_1766025402" src="https://github.com/user-attachments/assets/6a1110cd-8856-41db-b34e-744d7b582892" />   
+<img width="200" alt="Screenshot_1766025410" src="https://github.com/user-attachments/assets/8e188c75-d563-4537-a60d-5f8ca7726222" />    
+<img width="200"  alt="Screenshot_1766025415" src="https://github.com/user-attachments/assets/0249b9d2-2364-4c4f-9a23-217c3835846a" />  
+<img width="200"  alt="Screenshot_1766025468" src="https://github.com/user-attachments/assets/4deadedb-55a9-4002-86fe-f8d0dd7b100a" /> 
+<img width="200"  alt="Screenshot_1766025479" src="https://github.com/user-attachments/assets/873376bf-d048-47ec-960c-3397e50165ee" />
+<img width="200"  alt="Screenshot_1766025456" src="https://github.com/user-attachments/assets/38247d22-578c-4531-90e6-d9d0df569ecc" />
+<img width="200"  alt="Screenshot_1766025483" src="https://github.com/user-attachments/assets/72779610-3fbe-4ab7-9659-f950acec2c6a" />
+<img width="200"  alt="Screenshot_1766025485" src="https://github.com/user-attachments/assets/75adeb8d-fc0c-4829-b891-1c878b84952f" />
+
+---
+
+
+
 **Thank you for reviewing this task.**
 
