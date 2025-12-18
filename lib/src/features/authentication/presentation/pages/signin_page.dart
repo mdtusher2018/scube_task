@@ -15,8 +15,8 @@ final _obscurePasswordProvider = StateProvider<bool>((ref) => true);
 class SigninPage extends ConsumerWidget {
   SigninPage({super.key});
 
-  final emailCtrl = TextEditingController(text: "xokekek289@bablace.com");
-  final passCtrl = TextEditingController(text: "hello123");
+  final emailCtrl = TextEditingController();
+  final passCtrl = TextEditingController();
 
   void _onLogin(WidgetRef ref) {
     ref
