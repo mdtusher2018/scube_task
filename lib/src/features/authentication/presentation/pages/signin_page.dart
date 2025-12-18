@@ -19,6 +19,7 @@ class SigninPage extends ConsumerWidget {
   final passCtrl = TextEditingController();
 
   void _onLogin(WidgetRef ref) {
+    //calling login from notifiers
     ref
         .read(loginNotifierProvider.notifier)
         .login(email: emailCtrl.text.trim(), password: passCtrl.text.trim());
@@ -30,6 +31,10 @@ class SigninPage extends ConsumerWidget {
     final obscurePasswordNotifier = ref.read(_obscurePasswordProvider.notifier);
 
     final signinState = ref.watch(loginNotifierProvider);
+
+/// Listens to login state changes:
+/// - On successful response, navigates to the dashboard
+/// - On failure, displays an error message using a snackbar
 
     ref.listen<AsyncValue<SigninEntity?>>(loginNotifierProvider, (
       previous,
@@ -49,6 +54,9 @@ class SigninPage extends ConsumerWidget {
       );
     });
 
+/// Uses 60% of the screen height for the bottom sheet
+/// and the remaining space for the logo section
+
     final sheetHeight = MediaQuery.sizeOf(context).height * 0.6;
 
     return Scaffold(
@@ -58,6 +66,8 @@ class SigninPage extends ConsumerWidget {
         child: Column(
           children: [
             SizedBox(
+
+              ///  the remaining 40% space for the logo section
               height: MediaQuery.sizeOf(context).height * 0.4,
               child: FittedBox(
                 fit: BoxFit.scaleDown,

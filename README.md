@@ -180,6 +180,22 @@ This ensures:
 
 ---
 
+## 🔧 Possible Improvements
+
+The following improvements were intentionally left out due to the limited scope and timeline of the interview task, but could be added to enhance scalability and maintainability:
+
+### Centralized asset management
+Currently, images and icons are accessed directly from the assets directory. Introducing a dedicated class (e.g. `AppImages`)—similar to `ApiEndpoints` or `AppColors`—would centralize asset paths, making them easier to manage, update, and maintain across the application.
+
+### Asset folder organization
+At the moment, all images and icons are placed in a single assets directory. Organizing assets by type or feature (e.g. `assets/images/`, `assets/icons/`, `assets/illustrations/`) would improve project structure, readability, and long-term maintainability.
+
+### SVG support for icons
+Some icons are currently used as PNG assets (`x1`, `x2`), which is sufficient for mobile screens. However, for web or large displays, this may lead to pixelation. Using SVG assets would provide sharper visuals and better scalability across different screen sizes.
+
+---
+
+
 ## ✅ Summary
 
 * ✔ Login: Fully implemented with Clean Architecture + Riverpod

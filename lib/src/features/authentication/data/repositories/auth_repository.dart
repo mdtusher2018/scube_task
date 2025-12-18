@@ -6,6 +6,20 @@ import 'package:scube_task/src/core/utils/api_end_points.dart';
 import 'package:scube_task/src/features/authentication/data/models/sign_in/signin_response.dart';
 import 'package:scube_task/src/features/authentication/domain/repositories/i_auth_repository.dart';
 
+
+
+/// Authentication repository implementation
+///
+/// - Acts as the single source of truth for auth-related data
+/// - Responsible for API communication and response mapping
+/// - Returns domain-friendly [Result] instead of throwing exceptions
+///
+/// This class is marked as `final` because, according to Clean Architecture:
+/// - The domain layer defines the repository contract (abstraction)
+/// - The data layer provides the concrete implementation
+/// - The implementation should depend on the domain abstraction,
+///   and should not be further extended or instantiated via inheritance
+
 final class AuthRepository extends IAuthRepository {
   final IApiService api;
   final ILocalStorageService localStorageService;
@@ -14,6 +28,9 @@ final class AuthRepository extends IAuthRepository {
   @override
   Future<Result<SigninResponse, Failure>> login(String email, String password) {
     return asyncGuard(() async {
+      /// Dummy success response
+      /// 
+      /// a specific email to demonstrate the full auth flow
       if (email == "tusher@gmail.com") {
         return SigninResponse.fromJson({
           "status": "OK",
@@ -29,6 +46,10 @@ final class AuthRepository extends IAuthRepository {
         });
       }
 
+      /// Fallback API call
+      /// 
+      /// Intentionally hits a dummy endpoint to simulate
+      /// a failed authentication scenario
       final res = await api.post(ApiEndpoints.signin, {
         "email": email,
         "password": password,
