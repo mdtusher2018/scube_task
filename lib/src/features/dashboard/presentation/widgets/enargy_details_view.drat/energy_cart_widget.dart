@@ -26,7 +26,6 @@ class EnergyChartCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Header
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -37,7 +36,6 @@ class EnergyChartCard extends StatelessWidget {
 
           SizedBox(height: 12.h),
 
-          /// Data rows
           ...items.map((e) => _EnergyDataRow(item: e)),
         ],
       ),

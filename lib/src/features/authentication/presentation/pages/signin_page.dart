@@ -129,7 +129,6 @@ class SigninPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 16),
 
-                      /// PASSWORD
                       CommonTextField(
                         passCtrl,
                         isPasswordVisible: obscurePassword,

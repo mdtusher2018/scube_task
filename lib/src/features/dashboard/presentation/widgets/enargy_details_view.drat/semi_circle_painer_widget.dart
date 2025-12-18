@@ -1,9 +1,7 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:scube_task/src/shared/themes/colors.dart';
-
 
 class SemiCirclePainter extends CustomPainter {
   final double percentage; // 0 - 100
@@ -15,11 +13,9 @@ class SemiCirclePainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2;
 
-    /// Your exact design angles
     final startAngle = 3 * pi / 4;
     final totalSweepAngle = pi * 1.5;
 
-    /// Convert percentage to sweep
     final filledSweepAngle = totalSweepAngle * (percentage.clamp(0, 100) / 100);
 
     final bgPaint = Paint()

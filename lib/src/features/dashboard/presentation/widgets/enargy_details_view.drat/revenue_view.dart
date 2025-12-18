@@ -45,13 +45,11 @@ class _RevenueViewSectionState extends State<RevenueViewSection> {
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        /// Gauge
                         CustomPaint(
                           size: Size(160.r, 160.r),
                           painter: SemiCirclePainter(percentage: 80),
                         ),
 
-                        /// Safe text area
                         Container(
                           width: 160.r,
                           height: 160.r,
@@ -89,9 +87,7 @@ class _RevenueViewSectionState extends State<RevenueViewSection> {
                         ),
                         leading: Icon(Icons.bar_chart, color: AppColors.gray),
                         trailing: AnimatedRotation(
-                          turns: isExpanded
-                              ? 0.5
-                              : 0, // Optional: rotates the icon
+                          turns: isExpanded ? 0.5 : 0,
                           duration: const Duration(milliseconds: 200),
                           child: Container(
                             padding: EdgeInsets.all(4),
@@ -164,7 +160,7 @@ class _DataCostItem extends StatelessWidget {
                 size: 12,
                 color: AppColors.textSecondary,
               ),
-              CommonText("35689 ৳", size: 12, isBold: true),
+              CommonText("35689", size: 12, isBold: true),
             ],
           ),
         ],

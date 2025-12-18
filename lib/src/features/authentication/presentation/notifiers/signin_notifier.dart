@@ -14,17 +14,14 @@ class LoginNotifier extends _$LoginNotifier {
   @override
   FutureOr<SigninEntity?> build() {
     _useCase = ref.watch(loginUseCaseProvider);
-    return null; // initial state
+    return null;
   }
 
   Future<void> login({required String email, required String password}) async {
-    // Set state → loading
     state = const AsyncLoading();
 
-    // Call use case
     final result = await _useCase.execute(email: email, password: password);
 
-    // Handle Result
     switch (result) {
       case Success(:final data):
         state = AsyncData(data);

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:scube_task/src/shared/themes/colors.dart';
 import 'package:scube_task/src/shared/widgets/common_text.dart';
 
-//I'll change it to a class
+//need change it to a class since using class is more preferable foe scallable projects
 
 Widget commonRadioButon(String text, bool active) {
   return Row(

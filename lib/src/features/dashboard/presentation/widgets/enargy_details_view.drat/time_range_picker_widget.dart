@@ -54,7 +54,6 @@ class _DateRangeSearchRowState extends ConsumerState<DateRangeSearchRow> {
       height: 60.h,
       child: Row(
         children: [
-          /// From Date
           Expanded(
             child: GestureDetector(
               onTap: pickFromDate,
@@ -87,7 +86,6 @@ class _DateRangeSearchRowState extends ConsumerState<DateRangeSearchRow> {
 
           SizedBox(width: 10.w),
 
-          /// To Date
           Expanded(
             child: GestureDetector(
               onTap: pickToDate,

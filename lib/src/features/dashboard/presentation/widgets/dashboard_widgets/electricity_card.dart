@@ -170,7 +170,6 @@ class _ElectricityDataCard extends StatelessWidget {
             ),
             SizedBox(width: 8.w),
 
-            /// TEXT WRAP FIX
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
