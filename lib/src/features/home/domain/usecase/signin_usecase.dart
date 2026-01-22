@@ -5,9 +5,9 @@ import 'package:scube_task/src/core/base/result.dart';
 import 'package:scube_task/src/core/services/storage/i_local_storage_service.dart';
 import 'package:scube_task/src/core/services/storage/storage_key.dart';
 import 'package:scube_task/src/core/utils/extension/validator_extension.dart';
-import 'package:scube_task/src/features/authentication/data/models/sign_in/signin_response.dart';
-import 'package:scube_task/src/features/authentication/domain/entites/signin_entity.dart';
-import 'package:scube_task/src/features/authentication/domain/repositories/i_auth_repository.dart';
+import 'package:scube_task/src/features/home/data/models/sign_in/signin_response.dart';
+import 'package:scube_task/src/features/home/domain/entites/signin_entity.dart';
+import 'package:scube_task/src/features/home/domain/repositories/i_auth_repository.dart';
 
 class SigninUseCase {
   final IAuthRepository authRepository;

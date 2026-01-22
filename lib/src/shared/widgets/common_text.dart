@@ -9,7 +9,8 @@ class CommonText extends StatelessWidget {
   final bool? softwarp;
   final double? wordSpacing;
   final int maxline;
-  final bool haveUnderline;
+  final bool haveUnderLine;
+  final bool haveLineThrow;
   final FontWeight? fontWeight;
   final TextAlign textAlign;
 
@@ -22,7 +23,8 @@ class CommonText extends StatelessWidget {
     this.softwarp,
     this.wordSpacing,
     this.maxline = 1000,
-    this.haveUnderline = false,
+    this.haveUnderLine = false,
+    this.haveLineThrow = false,
     this.fontWeight,
     this.textAlign = TextAlign.left,
   });
@@ -38,13 +40,15 @@ class CommonText extends StatelessWidget {
       style: TextStyle(
         fontSize: size.sp,
         fontFamily: "EurostileExtendedBlack",
-        decoration: haveUnderline
+        decoration: haveUnderLine
             ? TextDecoration.underline
+            : haveLineThrow
+            ? TextDecoration.lineThrough
             : TextDecoration.none,
         color: color,
         wordSpacing: wordSpacing,
         fontWeight: isBold
-            ? FontWeight.bold
+            ? FontWeight.w600
             : (fontWeight ?? FontWeight.normal),
       ),
     );
