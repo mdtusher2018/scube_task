@@ -7,9 +7,14 @@ class HomeEntity {
 
 class CategoryEntity {
   final String title;
-  final String icon; // icon name OR image URL
+  final String icon;
+  final int id;
 
-  const CategoryEntity({required this.title, required this.icon});
+  const CategoryEntity({
+    required this.title,
+    required this.icon,
+    required this.id,
+  });
 }
 
 class ProductEntity {
