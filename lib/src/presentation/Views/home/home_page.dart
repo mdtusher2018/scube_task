@@ -148,6 +148,7 @@ class _CategoryItem extends StatelessWidget {
             Container(
               height: 60.r,
               width: 60.r,
+              padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: const Color(0xffFFF4DC),
                 shape: BoxShape.circle,
