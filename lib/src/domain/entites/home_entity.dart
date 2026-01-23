@@ -2,25 +2,19 @@ class HomeEntity {
   final List<CategoryEntity> categories;
   final List<ProductEntity> newArrivals;
 
-  const HomeEntity({
-    required this.categories,
-    required this.newArrivals,
-  });
+  const HomeEntity({required this.categories, required this.newArrivals});
 }
-
-
 
 class CategoryEntity {
   final String title;
   final String icon; // icon name OR image URL
 
-  const CategoryEntity({
-    required this.title,
-    required this.icon,
-  });
+  const CategoryEntity({required this.title, required this.icon});
 }
+
 class ProductEntity {
   final int id;
+  final String slug;
   final String name;
   final String image;
   final double rating;
@@ -30,6 +24,7 @@ class ProductEntity {
 
   const ProductEntity({
     required this.id,
+    required this.slug,
     required this.name,
     required this.image,
     required this.rating,

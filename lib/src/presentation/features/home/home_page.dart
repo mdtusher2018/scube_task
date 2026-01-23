@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:scube_task/src/core/di/injection.dart';
+import 'package:scube_task/src/core/router/routes.dart';
 import 'package:scube_task/src/core/utils/image_utils.dart';
 import 'package:scube_task/src/domain/entites/home_entity.dart';
 import 'package:scube_task/src/presentation/features/home/bloc/home_bloc.dart';
@@ -33,7 +35,7 @@ class HomePage extends StatelessWidget {
               }
               if (state is HomeError) return Center(child: Text(state.message));
               if (state is HomeLoaded) {
-                 final homeData = state.home;
+                final homeData = state.home;
                 return SingleChildScrollView(
                   child: Column(
                     children: [
@@ -49,7 +51,7 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               }
-                   return const SizedBox();
+              return const SizedBox();
             },
           ),
         ),
@@ -87,8 +89,6 @@ class _CategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(16),
@@ -141,15 +141,16 @@ class _CategoryItem extends StatelessWidget {
               color: const Color(0xffFFF4DC),
               shape: BoxShape.circle,
             ),
-            child: CommonImage( imagePath: icon,  fit: BoxFit.contain,),
+            child: CommonImage(imagePath: icon, fit: BoxFit.contain),
           ),
           SizedBox(height: 6.h),
           SizedBox(
-           
             height: 30.h,
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: CommonText(title, size: 12, color: AppColors.gray))),
+              child: CommonText(title, size: 12, color: AppColors.gray),
+            ),
+          ),
         ],
       ),
     );
@@ -192,7 +193,7 @@ class _ProductGrid extends StatelessWidget {
           childAspectRatio: 0.65,
         ),
         itemCount: products.length,
-        itemBuilder: (_, index) =>  _ProductCard(products[index]),
+        itemBuilder: (_, index) => _ProductCard(products[index]),
       ),
     );
   }
@@ -204,63 +205,72 @@ class _ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10.r),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Center(child: CommonImage(imagePath: getFullImagePath(product.image),fit: BoxFit.cover, )),
-              ),
-              SizedBox(height: 6.h),
-
-              RatingBarIndicator(
-                rating: product.rating,
-                itemBuilder: (context, index) =>
-                    const Icon(Icons.star, color: Colors.orange),
-                itemCount: 5,
-                itemSize: 18.sp,
-                direction: Axis.horizontal,
-              ),
-
-              SizedBox(height: 6.h),
-               CommonText(
-                product.name,
-                size: 13,
-                isBold: true,
-                maxline: 2,
-                
-              ),
-              SizedBox(height: 4.h),
-              Row(
-                children: [
-                   CommonText(
-                    "\$${product.price}",
-                    size: 16,
-                    color: AppColors.red,
-                    isBold: true,
+    return InkWell(
+      onTap: () {
+        context.push(AppRoutes.produceDetails, extra: {'slug': product.slug});
+      },
+      child: Container(
+        padding: EdgeInsets.all(10.r),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Center(
+                    child: CommonImage(
+                      imagePath: getFullImagePath(product.image),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  SizedBox(width: 6.w),
-                 if(product.oldPrice!=null) CommonText("\$${product.oldPrice}", color: Colors.grey, haveLineThrow: true),
-                ],
-              ),
-            ],
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Icon(
-              Icons.favorite,
-              size: 18.sp,
-              color: AppColors.gray.withOpacity(0.5),
+                ),
+                SizedBox(height: 6.h),
+
+                RatingBarIndicator(
+                  rating: product.rating,
+                  itemBuilder: (context, index) =>
+                      const Icon(Icons.star, color: Colors.orange),
+                  itemCount: 5,
+                  itemSize: 18.sp,
+                  direction: Axis.horizontal,
+                ),
+
+                SizedBox(height: 6.h),
+                CommonText(product.name, size: 13, isBold: true, maxline: 2),
+                SizedBox(height: 4.h),
+                Row(
+                  children: [
+                    CommonText(
+                      "\$${product.price}",
+                      size: 16,
+                      color: AppColors.red,
+                      isBold: true,
+                    ),
+                    SizedBox(width: 6.w),
+                    if (product.oldPrice != null)
+                      CommonText(
+                        "\$${product.oldPrice}",
+                        color: Colors.grey,
+                        haveLineThrow: true,
+                      ),
+                  ],
+                ),
+              ],
             ),
-          ),
-        ],
+            Align(
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.favorite,
+                size: 18.sp,
+                color: AppColors.gray.withOpacity(0.5),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

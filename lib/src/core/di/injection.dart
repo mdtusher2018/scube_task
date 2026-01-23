@@ -9,9 +9,13 @@ import 'package:scube_task/src/core/services/storage/i_local_storage_service.dar
 import 'package:scube_task/src/core/services/storage/local_storage_service.dart';
 import 'package:scube_task/src/core/utils/api_end_points.dart';
 import 'package:scube_task/src/data/repositories/home_repository.dart';
+import 'package:scube_task/src/data/repositories/product_repository.dart';
 import 'package:scube_task/src/domain/repositories/i_home_repository.dart';
+import 'package:scube_task/src/domain/repositories/i_product_repository.dart';
 import 'package:scube_task/src/domain/usecase/home_usecase.dart';
+import 'package:scube_task/src/domain/usecase/product_usecase.dart';
 import 'package:scube_task/src/presentation/features/home/bloc/home_bloc.dart';
+import 'package:scube_task/src/presentation/features/product/bloc/product_details_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -36,23 +40,26 @@ Future<void> setupDI() async {
 
   getIt.registerLazySingleton<ISnackBarService>(() => SnackBarService());
 
+  // Home
+  getIt.registerLazySingleton<IHomeRepository>(
+    () => HomeRepository(getIt<IApiService>(), getIt<ILocalStorageService>()),
+  );
 
+  getIt.registerLazySingleton<HomeUseCase>(
+    () => HomeUseCase(repository: getIt<IHomeRepository>()),
+  );
 
-// Home
-getIt.registerLazySingleton<IHomeRepository>(
-  () => HomeRepository(
-    getIt<IApiService>(),
-    getIt<ILocalStorageService>(),
-  ),
-);
+  getIt.registerFactory<HomeBloc>(() => HomeBloc(getIt<HomeUseCase>()));
 
-getIt.registerLazySingleton<HomeUseCase>(
-  () => HomeUseCase(repository: getIt<IHomeRepository>()),
-);
+  getIt.registerLazySingleton<IProductRepository>(
+    () => ProductRepository(getIt<IApiService>()),
+  );
 
-getIt.registerFactory<HomeBloc>(
-  () => HomeBloc(getIt<HomeUseCase>()),
-);
+  getIt.registerLazySingleton<ProductUseCase>(
+    () => ProductUseCase(repository: getIt<IProductRepository>()),
+  );
 
-
+  getIt.registerFactory<ProductDetailsBloc>(
+    () => ProductDetailsBloc(useCase: getIt<ProductUseCase>()),
+  );
 }

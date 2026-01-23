@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:scube_task/src/domain/entites/home_entity.dart';
 part 'home_response.freezed.dart';
 part 'home_response.g.dart';
 
@@ -28,7 +29,6 @@ abstract class Category with _$Category {
       _$CategoryFromJson(json);
 }
 
-
 @freezed
 abstract class Product with _$Product {
   const factory Product({
@@ -57,7 +57,6 @@ abstract class Product with _$Product {
 
     required int brand_id,
 
-
     required String averageRating,
 
     dynamic totalSold,
@@ -68,7 +67,6 @@ abstract class Product with _$Product {
   factory Product.fromJson(Map<String, dynamic> json) =>
       _$ProductFromJson(json);
 }
-
 
 @freezed
 abstract class Variant with _$Variant {
@@ -85,7 +83,6 @@ abstract class Variant with _$Variant {
       _$VariantFromJson(json);
 }
 
-
 @freezed
 abstract class VariantItem with _$VariantItem {
   const factory VariantItem({
@@ -101,4 +98,45 @@ abstract class VariantItem with _$VariantItem {
       _$VariantItemFromJson(json);
 }
 
+/// --------------------
+/// HomeResponse → HomeEntity
+/// --------------------
+extension HomeResponseMapper on HomeResponse {
+  HomeEntity toEntity() {
+    return HomeEntity(
+      categories: homepage_categories
+          .map((category) => category.toEntity())
+          .toList(),
+      newArrivals: newArrivalProducts
+          .map((product) => product.toEntity())
+          .toList(),
+    );
+  }
+}
 
+/// --------------------
+/// Category → CategoryEntity
+/// --------------------
+extension CategoryMapper on Category {
+  CategoryEntity toEntity() {
+    return CategoryEntity(title: name, icon: image ?? icon);
+  }
+}
+
+/// --------------------
+/// Product → ProductEntity
+/// --------------------
+extension ProductMapper on Product {
+  ProductEntity toEntity() {
+    return ProductEntity(
+      id: id,
+      slug: slug,
+      name: name,
+      image: thumb_image,
+      rating: double.tryParse(averageRating) ?? 0,
+      price: offer_price ?? price,
+      oldPrice: offer_price != null ? price : null,
+      isFavorite: false, // later from wishlist API
+    );
+  }
+}

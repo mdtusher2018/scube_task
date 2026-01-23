@@ -3,7 +3,7 @@ import 'package:scube_task/src/core/base/result.dart';
 import 'package:scube_task/src/core/services/network/i_api_service.dart';
 import 'package:scube_task/src/core/services/storage/i_local_storage_service.dart';
 import 'package:scube_task/src/core/utils/api_end_points.dart';
-import 'package:scube_task/src/data/models/home_response.dart';
+import 'package:scube_task/src/data/models/home_response/home_response.dart';
 import 'package:scube_task/src/domain/repositories/i_home_repository.dart';
 
 final class HomeRepository extends IHomeRepository {
