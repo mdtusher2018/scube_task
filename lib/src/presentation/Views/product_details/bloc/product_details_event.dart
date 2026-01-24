@@ -17,7 +17,10 @@ class LoadProductDetails extends ProductDetailsEvent {
 }
 
 class SelectProductImage extends ProductDetailsEvent {
-  final String image;
-  const SelectProductImage(this.image);
-}
+  final int imageIndex;
 
+  const SelectProductImage(this.imageIndex);
+
+  @override
+  List<Object> get props => [imageIndex];
+}

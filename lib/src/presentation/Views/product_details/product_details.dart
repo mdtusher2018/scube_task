@@ -13,6 +13,7 @@ import 'package:scube_task/src/presentation/shared/components/common_text.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+
 class ProductDetailsPage extends StatelessWidget {
   final String slug;
   const ProductDetailsPage({super.key, required this.slug});
@@ -20,13 +21,12 @@ class ProductDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const _AddToCartBar(),
-      appBar: _ProductAppBar(),
       backgroundColor: AppColors.mainBG,
+      appBar: const _ProductAppBar(),
+      bottomNavigationBar: const _AddToCartBar(),
       body: BlocProvider(
         create: (_) =>
             getIt<ProductDetailsBloc>()..add(LoadProductDetails(slug)),
-
         child: BlocBuilder<ProductDetailsBloc, ProductDetailsState>(
           builder: (context, state) {
             if (state is ProductDetailsLoading) {
@@ -38,125 +38,122 @@ class ProductDetailsPage extends StatelessWidget {
             }
 
             if (state is ProductDetailsLoaded) {
-        
+              final product = state.product;
+              final gallery = product.gallery ?? [];
+
+              final mainImage = state.selectedImage != null &&
+                      gallery.isNotEmpty &&
+                      state.selectedImage! < gallery.length
+                  ? gallery[state.selectedImage!].image ?? product.image
+                  : product.image;
+
               return SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      /// 🔥 IMAGE + THUMBNAILS
                       Stack(
-                        alignment: AlignmentGeometry.bottomCenter,
+                        alignment: Alignment.bottomCenter,
                         children: [
                           Container(
                             margin: EdgeInsets.only(bottom: 20.h),
-                            decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.15),
-                            ),
-                            child: Center(
-                              child: SizedBox(
-                                height: 220.h,
-
-                                child: ClipRRect(
-                                  child: PhotoView(
-                                    backgroundDecoration: const BoxDecoration(
-                                      color: Colors.transparent,
-                                    ),
-                                    imageProvider: NetworkImage(
-                                      getFullImagePath(state.selectedImage),
-                                    ),
-                                    minScale: PhotoViewComputedScale.contained,
-                                    maxScale:
-                                        PhotoViewComputedScale.covered * 3,
-                                  ),
+                            color: AppColors.primary.withOpacity(0.15),
+                            child: SizedBox(
+                              height: 220.h,
+                              child: PhotoView(
+                                backgroundDecoration:
+                                    const BoxDecoration(color: Colors.transparent),
+                                imageProvider: NetworkImage(
+                                  getFullImagePath(mainImage),
                                 ),
+                                minScale: PhotoViewComputedScale.contained,
+                                maxScale:
+                                    PhotoViewComputedScale.covered * 3,
                               ),
                             ),
                           ),
                           SizedBox(height: 12.h),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(
-                              state.product.gallery?.length ?? 0,
-                              (index) {
-                                final image = state.product.gallery?[index];
-                                if(image==null)return SizedBox.shrink();
-                                final isSelected =
-                                    image.image == state.selectedImage;
+                            children: List.generate(gallery.length, (index) {
+                              final image = gallery[index];
+                              final isSelected =
+                                  index == state.selectedImage;
 
-                                return GestureDetector(
-                                  onTap: () {
-                                    context.read<ProductDetailsBloc>().add(
-                                      SelectProductImage(image.image ?? ""),
-                                    );
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
-                                    ),
-                                    height: 50.r,
-                                    width: 48.r,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border: Border.all(
-                                        color: isSelected
-                                            ? AppColors.primary
-                                            : AppColors.gray,
-                                        width: isSelected ? 2 : 0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(6.r),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(4.r),
-                                      child: Image.network(
-                                        getFullImagePath(image.image ?? ""),
-                                        fit: BoxFit.cover,
-                                      ),
+                              return GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<ProductDetailsBloc>()
+                                      .add(SelectProductImage(index));
+                                },
+                                child: Container(
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 6.w),
+                                  height: 50.r,
+                                  width: 48.r,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.circular(6.r),
+                                    border: Border.all(
+                                      color: isSelected
+                                          ? AppColors.primary
+                                          : AppColors.gray,
+                                      width: isSelected ? 2 : 1,
                                     ),
                                   ),
-                                );
-                              },
-                            ),
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(4.r),
+                                    child: Image.network(
+                                      getFullImagePath(image.image ?? ""),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
                           ),
                         ],
                       ),
 
+                      /// 🔥 DETAILS
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 20.h),
                             _PriceSection(
-                              price: state.product.price,
-                              offerPrice: state.product.offerPrice,
+                              price: product.price,
+                              offerPrice: product.offerPrice,
                             ),
                             SizedBox(height: 8.h),
-
                             CommonText(
-                              state.product.categoryName,
+                              product.categoryName,
                               color: AppColors.textSecondary,
                             ),
                             SizedBox(height: 8.h),
                             CommonText(
-                              state.product.name,
+                              product.name,
                               size: 16,
                               isBold: true,
                             ),
                             SizedBox(height: 10.h),
                             _RatingRow(
-                              rating: state.product.rating,
-                              totalReviews: state.product.totalReviews,
+                              rating: product.rating,
+                              totalReviews: product.totalReviews,
                             ),
                             SizedBox(height: 12.h),
                             CommonText(
-                              state.product.shortDescription,
+                              product.shortDescription,
                               size: 12,
                               color: AppColors.textSecondary,
                             ),
                             SizedBox(height: 16.h),
-                            _Introduction(state.product.longDescription),
+                            _Introduction(product.longDescription),
                             SizedBox(height: 16.h),
-                            _Features(state.product.features),
+                            _Features(product.features),
                             SizedBox(height: 16.h),
                           ],
                         ),
@@ -166,6 +163,7 @@ class ProductDetailsPage extends StatelessWidget {
                 ),
               );
             }
+
             return const SizedBox();
           },
         ),
@@ -173,6 +171,7 @@ class ProductDetailsPage extends StatelessWidget {
     );
   }
 }
+
 
 class _ProductAppBar extends StatelessWidget implements PreferredSizeWidget {
   const _ProductAppBar();
