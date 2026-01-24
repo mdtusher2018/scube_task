@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scube_task/src/core/di/injection.dart';
 import 'package:scube_task/src/core/router/routes.dart';
+import 'package:scube_task/src/core/utils/logger.dart';
 import 'package:scube_task/src/domain/entites/common_entity/category_entity.dart';
-import 'package:scube_task/src/domain/entites/common_entity/product_entity.dart';
 import 'package:scube_task/src/presentation/Views/home/bloc/home_bloc.dart';
 import 'package:scube_task/src/presentation/Views/home/bloc/home_event.dart';
 import 'package:scube_task/src/presentation/Views/home/bloc/home_state.dart';
@@ -41,20 +41,42 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 12.h),
-                     CommonTextField(
-      
-        hintText: "Search products",
-        prefixWidget:   const Icon(Icons.search, color: Colors.grey),
-      onsubmit: (value){
-    
-      },
-      ) ,
+                      CommonTextField(
+                        hintText: "Search products",
+                        prefixWidget: const Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        ),
+                        onsubmit: (value) {
+                          AppLogger.error(value);
+                          context.read<HomeBloc>().add(
+                            SearchHomeProducts(value),
+                          );
+                        },
+                      ),
                       SizedBox(height: 20.h),
                       _CategorySection(homeData.categories),
                       SizedBox(height: 20.h),
                       const _NewArrivalHeader(),
                       SizedBox(height: 12.h),
-                      _ProductGrid(homeData.newArrivals),
+                      Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.only(bottom: 10.h),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 12.h,
+          crossAxisSpacing: 12.w,
+          childAspectRatio: 0.65,
+        ),
+        itemCount: state.filteredProducts.length,
+        itemBuilder: (_, index) => ProductCard(state.filteredProducts[index]),
+      ),
+    )
+                      
+                    
                     ],
                   ),
                 );
@@ -67,7 +89,6 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
 
 class _CategorySection extends StatelessWidget {
   final List<CategoryEntity> categories;
@@ -83,13 +104,14 @@ class _CategorySection extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:  [
+            children: [
               CommonText("Categories", size: 16, isBold: true),
               InkWell(
                 onTap: () {
                   context.push(AppRoutes.allProducts);
                 },
-                child: CommonText("See all", size: 16, color: Colors.grey)),
+                child: CommonText("See all", size: 16, color: Colors.grey),
+              ),
             ],
           ),
           SizedBox(height: 12.h),
@@ -130,7 +152,10 @@ class _CategoryItem extends StatelessWidget {
       padding: const EdgeInsets.only(right: 20.0),
       child: InkWell(
         onTap: () {
-          context.push(AppRoutes.produceByCategory, extra: {'id': id.toString()});
+          context.push(
+            AppRoutes.produceByCategory,
+            extra: {'id': id.toString()},
+          );
         },
         child: Column(
           children: [
@@ -176,27 +201,3 @@ class _NewArrivalHeader extends StatelessWidget {
   }
 }
 
-class _ProductGrid extends StatelessWidget {
-  final List<ProductEntity> products;
-  const _ProductGrid(this.products);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.only(bottom: 10.h),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 12.h,
-          crossAxisSpacing: 12.w,
-          childAspectRatio: 0.65,
-        ),
-        itemCount: products.length,
-        itemBuilder: (_, index) => ProductCard(products[index]),
-      ),
-    );
-  }
-}

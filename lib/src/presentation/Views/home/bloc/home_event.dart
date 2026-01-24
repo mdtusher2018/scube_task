@@ -6,3 +6,8 @@ abstract class HomeEvent extends Equatable {
 }
 
 class FetchHomeData extends HomeEvent {}
+
+class SearchHomeProducts extends HomeEvent {
+  final String query;
+  SearchHomeProducts(this.query);
+}
