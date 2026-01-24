@@ -1,7 +1,12 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:scube_task/src/presentation/Views/home/home_page.dart';
+import 'package:scube_task/src/core/di/injection.dart';
+import 'package:scube_task/src/presentation/Views/all_products/all_products_page.dart';
+import 'package:scube_task/src/presentation/Views/all_products/bloc/all_products_bloc.dart';
+import 'package:scube_task/src/presentation/Views/all_products/bloc/all_products_event.dart';
 import 'package:scube_task/src/presentation/Views/product_by_category/product_by_category_page.dart';
 import 'package:scube_task/src/presentation/Views/product_details/product_details.dart';
+import 'package:scube_task/src/presentation/Views/root_page.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -9,9 +14,16 @@ class AppRouter {
 
   AppRouter() {
     router = GoRouter(
-      initialLocation: AppRoutes.home,
+      initialLocation: AppRoutes.root,
       routes: [
-        GoRoute(path: AppRoutes.home, builder: (context, state) => HomePage()),
+        GoRoute(path: AppRoutes.root, builder: (context, state) => RootPage()),
+        GoRoute(
+          path: AppRoutes.allProducts,
+          builder: (context, state) => BlocProvider(
+            create: (_) => getIt<AllProductsBloc>()..add(FetchAllProducts()),
+            child: AllProductsPage(),
+          ),
+        ),
         GoRoute(
           path: AppRoutes.produceDetails,
 

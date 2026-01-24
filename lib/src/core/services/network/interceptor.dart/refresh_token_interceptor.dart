@@ -125,7 +125,7 @@ class RefreshTokenInterceptor extends Interceptor {
     localStorage.clearAll();
     //implement logout
     if (navigatorKey.currentState?.mounted == true) {
-      navigatorKey.currentState?.context.go(AppRoutes.home);
+      navigatorKey.currentState?.context.go(AppRoutes.root);
     }
   }
 }

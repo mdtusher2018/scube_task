@@ -2,8 +2,10 @@
 
 import 'package:scube_task/src/core/base/failure.dart';
 import 'package:scube_task/src/core/base/result.dart';
+import 'package:scube_task/src/data/models/all_products/all_products_response.dart';
 import 'package:scube_task/src/data/models/product_by_category_response/product_by_category_response.dart';
 import 'package:scube_task/src/data/models/product_details_response/product_details_response.dart';
+import 'package:scube_task/src/domain/entites/all_product_entity.dart';
 import 'package:scube_task/src/domain/entites/product_by_category_entity.dart';
 import 'package:scube_task/src/domain/entites/product_details_entity.dart';
 import 'package:scube_task/src/domain/repositories/i_product_repository.dart';
@@ -40,4 +42,21 @@ class ProductUseCase {
       ((result as Success).data as ProductByCategoryResponse).toEntity(),
     );
   }
+Future<Result<AllProductsEntity, Failure>> getAllProducts({
+  required int page,
+}) async {
+  final result = await repository.getALLProducts(page: page);
+
+  if (result is FailureResult) {
+    return FailureResult((result as FailureResult).error);
+  }
+
+  return Success(
+    ((result as Success).data as AllProductsResponse).toEntity(),
+  );
+}
+
+
+
+
 }

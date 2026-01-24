@@ -5,7 +5,7 @@ class ApiEndpoints {
   static String refreshToken = "auth/refresh-token";
 
   static String home = "/";
-  static String product = "/product";
+  static String product(int page) => "/product?page=$page";
   static String productDetails(String slug) => "/product/$slug";
   static String productById(String id) => "/product-by-category/$id";
 }

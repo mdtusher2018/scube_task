@@ -14,6 +14,7 @@ import 'package:scube_task/src/domain/repositories/i_home_repository.dart';
 import 'package:scube_task/src/domain/repositories/i_product_repository.dart';
 import 'package:scube_task/src/domain/usecase/home_usecase.dart';
 import 'package:scube_task/src/domain/usecase/product_usecase.dart';
+import 'package:scube_task/src/presentation/Views/all_products/bloc/all_products_bloc.dart';
 import 'package:scube_task/src/presentation/Views/home/bloc/home_bloc.dart';
 import 'package:scube_task/src/presentation/Views/product_by_category/bloc/product_by_category_bloc.dart';
 import 'package:scube_task/src/presentation/Views/product_details/bloc/product_details_bloc.dart';
@@ -67,5 +68,8 @@ Future<void> setupDI() async {
 
   getIt.registerFactory<ProductByCategoryBloc>(
     () => ProductByCategoryBloc(getIt<ProductUseCase>()),
+  );
+  getIt.registerFactory<AllProductsBloc>(
+    () => AllProductsBloc(getIt<ProductUseCase>()),
   );
 }

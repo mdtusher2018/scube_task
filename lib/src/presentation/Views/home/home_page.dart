@@ -12,8 +12,8 @@ import 'package:scube_task/src/presentation/Views/home/bloc/home_state.dart';
 import 'package:scube_task/src/core/themes/colors.dart';
 import 'package:scube_task/src/presentation/shared/components/common_image.dart';
 import 'package:scube_task/src/presentation/shared/components/common_text.dart';
+import 'package:scube_task/src/presentation/shared/components/common_text_field.dart';
 import 'package:scube_task/src/presentation/shared/widgets/product_card.dart';
-import 'package:scube_task/src/presentation/shared/widgets/search_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -41,7 +41,14 @@ class HomePage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 12.h),
-                      const CommonSearchBar(),
+                     CommonTextField(
+      
+        hintText: "Search products",
+        prefixWidget:   const Icon(Icons.search, color: Colors.grey),
+      onsubmit: (value){
+    
+      },
+      ) ,
                       SizedBox(height: 20.h),
                       _CategorySection(homeData.categories),
                       SizedBox(height: 20.h),
@@ -76,9 +83,13 @@ class _CategorySection extends StatelessWidget {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children:  [
               CommonText("Categories", size: 16, isBold: true),
-              CommonText("See all", size: 16, color: Colors.grey),
+              InkWell(
+                onTap: () {
+                  context.push(AppRoutes.allProducts);
+                },
+                child: CommonText("See all", size: 16, color: Colors.grey)),
             ],
           ),
           SizedBox(height: 12.h),

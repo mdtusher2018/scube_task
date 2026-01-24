@@ -8,8 +8,8 @@ import 'package:scube_task/src/presentation/Views/product_by_category/bloc/produ
 import 'package:scube_task/src/presentation/Views/product_by_category/bloc/product_by_category_state.dart';
 import 'package:scube_task/src/core/themes/colors.dart';
 import 'package:scube_task/src/presentation/shared/components/common_text.dart';
+import 'package:scube_task/src/presentation/shared/components/common_text_field.dart';
 import 'package:scube_task/src/presentation/shared/widgets/product_card.dart';
-import 'package:scube_task/src/presentation/shared/widgets/search_bar.dart';
 
 class ProductByCategoryPage extends StatelessWidget {
   const ProductByCategoryPage({super.key, required this.id});
@@ -41,7 +41,14 @@ class ProductByCategoryPage extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 12.h),
-                       CommonSearchBar(),
+                      CommonTextField(
+                        hintText: "Search products",
+                        prefixWidget: const Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        ),
+                        onsubmit: (value) {},
+                      ),
 
                       SizedBox(height: 12.h),
                       _ProductGrid(productsData),
@@ -92,7 +99,7 @@ class _ProductAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.mainBG,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
- 
+
       leading: Padding(
         padding: EdgeInsets.only(left: 12.w),
         child: CircleAvatar(
