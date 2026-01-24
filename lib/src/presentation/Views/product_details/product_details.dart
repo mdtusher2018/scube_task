@@ -58,17 +58,20 @@ class ProductDetailsPage extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(bottom: 20.h),
                             color: AppColors.primary.withOpacity(0.15),
-                            child: SizedBox(
-                              height: 220.h,
-                              child: PhotoView(
-                                backgroundDecoration:
-                                    const BoxDecoration(color: Colors.transparent),
-                                imageProvider: NetworkImage(
-                                  getFullImagePath(mainImage),
+                            child: ClipRect(
+                              child: SizedBox(
+                                height: 220.h,
+                                child: PhotoView(
+                                  
+                                  backgroundDecoration:
+                                      const BoxDecoration(color: Colors.transparent),
+                                  imageProvider: NetworkImage(
+                                    getFullImagePath(mainImage),
+                                  ),
+                                  minScale: PhotoViewComputedScale.contained,
+                                  maxScale:
+                                      PhotoViewComputedScale.covered * 3,
                                 ),
-                                minScale: PhotoViewComputedScale.contained,
-                                maxScale:
-                                    PhotoViewComputedScale.covered * 3,
                               ),
                             ),
                           ),
